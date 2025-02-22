@@ -16,7 +16,7 @@ export class Server
 	}
 	async postLogin(data: LoginRequestType) 
 	{
-		return await this.post("/login", data)
+		return await this.post("/Login", data)
 	}
 
 	async GetAllRequestList()
