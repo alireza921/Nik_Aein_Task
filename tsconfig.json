@@ -1,0 +1,48 @@
+{
+	"compilerOptions": {
+		"target": "ES6",
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext"
+		],
+		"rootDir": ".",
+		"outDir": "./dist",
+		"module": "ESNext",
+		"jsx": "react-jsx",
+		"strict": true,
+		"moduleResolution": "Node",
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"allowJs": true,
+		"checkJs": false,
+		"sourceMap": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"removeComments": true,
+		"noEmit": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"incremental": true,
+	},
+	"paths": {
+		"@/*": [
+			"./src/*",
+			"./public/*"
+		]
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+	],
+	"exclude": [
+		"node_modules",
+		"build",
+		"dist",
+		"static",
+		"public"
+	]
+}
