@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 import SelectBox from "../components/SelectBox";
 import StringBox from "../components/StringBox";
 import FilteredTable from "../components/FilteredTable";
-import { TableDataType } from "../types/TableDataType";
 
 const USER_NAME = "09115787681";
 const PASSWORD = "906475";
@@ -39,7 +38,7 @@ const DashboardPage = (props: DashboardPageProps) =>
 		customerName: ""
 	});
 	const [paginate, setPaginate] = useState<number>(0);
-	const [tableData, setTableData] = useState<TableDataType>();
+	// const [tableData, setTableData] = useState<TableDataType>();
 
 	const onSelectChange = (e: SelectChangeEvent) =>
 	{
