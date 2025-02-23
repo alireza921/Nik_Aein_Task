@@ -2,9 +2,7 @@ import { useEffect } from "react";
 import { Server } from "./server/Server";
 import toast from "react-hot-toast";
 import DashboardPage from "./pages/DashboardPage";
-import { ThemeProvider } from "@mui/material/styles";
 
-import { theme } from "./theme/theme";
 const USER_NAME = "09115787681";
 const PASSWORD = "906475";
 const USER_TYPE = 1;
@@ -25,13 +23,11 @@ function App()
 				})
 	})
 	return (
-		<ThemeProvider theme={theme} >
-			<div className="App">
-				<main>
-					<DashboardPage server={server} />
-				</main>
-			</div>
-		</ThemeProvider>
+		<div className="App">
+			<main>
+				<DashboardPage server={server} />
+			</main>
+		</div>
 	);
 }
 

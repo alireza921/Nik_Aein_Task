@@ -20,6 +20,7 @@ const SelectBox = (props: SelectBoxProps) =>
 						label="وضعیت"
 						onChange={props.onSelectChange}
 						margin="dense"
+						size="small"
 					>
 						{
 							props.selectItems.map((item: SelectInputType, index: number) =>

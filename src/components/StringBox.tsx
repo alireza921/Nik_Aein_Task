@@ -18,6 +18,8 @@ const StringBox = (props: StringBoxProps) =>
 				value={props.value}
 				onChange={props.onTextInputChange}
 				type="string"
+				sx={{ direction: "rtl" }}
+				size="small"
 			/>
 		</>
 	);
