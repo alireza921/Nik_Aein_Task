@@ -9,13 +9,51 @@
 
 * {
 	box-sizing: border-box;
-	direction: rtl;
+	direction: rtl !important;
 	font-family: 'Vazir', sans-serif !important;
 	margin: 0;
+}
+
+html,
+body {
+	direction: rtl !important;
 }
 
 .App {
 	text-align: center;
 	padding: 16px;
 	background-color: #eee;
+}
+
+
+.loading_parent {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	padding: 48px 0;
+	color: rgba(20, 27, 92, 1);
+	gap: 16px;
+}
+
+.loader {
+	margin: 16px 0;
+	width: 75px;
+	height: 75px;
+	border-radius: 50%;
+	padding: 1px;
+	background: conic-gradient(#0000 10%, #001664) content-box;
+	-webkit-mask:
+		repeating-conic-gradient(#0000 0deg, #000 1deg 20deg, #0000 21deg 36deg),
+		radial-gradient(farthest-side, #0000 calc(100% - 9px), #000 calc(100% - 8px));
+	-webkit-mask-composite: destination-in;
+	animation: s4 1s infinite steps(10);
+}
+
+@keyframes s4 {
+	to {
+		transform: rotate(1turn)
+	}
 }

@@ -6,16 +6,21 @@ export class Server
 {
 	baseURl = "http://appapi.saminagent.ir:8082";
 	PersonId = 37;
+	headers = "Accept-Language = fa-ir";
 
 	async get(subdirectory: string)
 	{
 		let fullURL = this.baseURl + subdirectory;
-		return await axios.get(fullURL);
+		return await axios.get(fullURL, {
+			headers: {
+				'Accept-Language': 'fa-ir',
+			}
+		});
 	}
 	async post(subdirectory: string, data: LoginRequestType)
 	{
 		let fullURL = this.baseURl + subdirectory;
-		return await axios.post(fullURL, data)
+		return await axios.post(fullURL, data, { withCredentials: true })
 	}
 	async postLogin(data: LoginRequestType) 
 	{
