@@ -1,12 +1,16 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { SelectInputType } from "../types/SelectInputType";
 import SelectBox from "../components/SelectBox";
 import { selectData } from "../data/SelectData";
-import { SelectChangeEvent, Stack } from "@mui/material";
+import { Icon, SelectChangeEvent, Stack, Typography } from "@mui/material";
 import StringBox from "../components/StringBox";
+import { Server } from "../server/Server";
+
 
 interface DashboardPageProps
-{ }
+{
+	server: Server;
+}
 interface DashboardPageState
 {
 	mobile: string;
@@ -17,6 +21,8 @@ interface DashboardPageState
 
 const DashboardPage = (props: DashboardPageProps) =>
 {
+	console.log(props);
+
 	const [selectInput, setSelectInput] = useState<SelectInputType>({
 		text: "",
 		state: 0
@@ -43,8 +49,23 @@ const DashboardPage = (props: DashboardPageProps) =>
 	}
 	// const onDateChange = () => { }
 
+	useEffect(() =>
+	{
+		props.server.GetAllRequestList({
+			PersonId: 37,
+			PageNumber: 1,
+			PageSize: 10
+		})
+			.then((res) => console.log(res))
+			.catch((error) => console.log(error));
+	})
 	return (
 		<>
+			<Typography variant="h2">
+				<Icon > 
+
+				</Icon>
+			</Typography> 
 			<Stack
 				direction="row"
 				flexWrap="wrap"
@@ -67,6 +88,7 @@ const DashboardPage = (props: DashboardPageProps) =>
 					selectItems={selectData}
 					onSelectChange={onSelectChange}
 				/>
+
 				<StringBox
 					lable="شماره موبایل"
 					name="mobile"

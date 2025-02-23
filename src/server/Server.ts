@@ -1,9 +1,12 @@
 import axios from "axios";
 import { LoginRequestType } from "../types/LoginRequestType";
+import { RequestType } from "../types/RequestType";
 
 export class Server
 {
 	baseURl = "http://appapi.saminagent.ir:8082";
+	PersonId = 37;
+
 	async get(subdirectory: string)
 	{
 		let fullURL = this.baseURl + subdirectory;
@@ -19,8 +22,10 @@ export class Server
 		return await this.post("/Login", data)
 	}
 
-	async GetAllRequestList()
+	async GetAllRequestList(query: RequestType)
 	{
-		return await this.get("/GetAllRequestList");
+		return await this.get(`
+			/GetAllRequestList?PersonId=${this.PersonId}&PageNumber=${query.PageNumber}&PageSize=${query.PageSize}
+			`);
 	}
 }

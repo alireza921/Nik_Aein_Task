@@ -26,5 +26,3 @@ tsconfig.tsbuildinfo
 
 #compile
 /dist
-
-package-lock.json
