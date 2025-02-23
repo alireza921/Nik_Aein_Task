@@ -15,4 +15,5 @@ export interface RequestType
 	PageSize: number;
 	SearchTerm?: string;
 	SortBy?: string;
+	CustomerName?: string;
 }

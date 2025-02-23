@@ -1,17 +1,19 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { SelectInputType } from "../types/SelectInputType";
-import SelectBox from "../components/SelectBox";
 import { selectData } from "../data/SelectData";
 import { Box, Button, SelectChangeEvent, Stack, Typography } from "@mui/material";
-import StringBox from "../components/StringBox";
 import { Server } from "../server/Server";
+import toast from "react-hot-toast";
+//Components 
+import SelectBox from "../components/SelectBox";
+import StringBox from "../components/StringBox";
 import FilteredTable from "../components/FilteredTable";
+import { TableDataType } from "../types/TableDataType";
 
+const USER_NAME = "09115787681";
+const PASSWORD = "906475";
+const USER_TYPE = 1;
 
-interface DashboardPageProps
-{
-	server: Server;
-}
 interface DashboardPageState
 {
 	mobile: string;
@@ -19,11 +21,14 @@ interface DashboardPageState
 	customerName: string;
 }
 
+interface DashboardPageProps
+{
+	server: Server;
+	isLogin: boolean;
+}
 
 const DashboardPage = (props: DashboardPageProps) =>
 {
-	console.log(props);
-
 	const [selectInput, setSelectInput] = useState<SelectInputType>({
 		text: "",
 		state: 0
@@ -33,6 +38,8 @@ const DashboardPage = (props: DashboardPageProps) =>
 		deviceSerial: "",
 		customerName: ""
 	});
+	const [paginate, setPaginate] = useState<number>(0);
+	const [tableData, setTableData] = useState<TableDataType>();
 
 	const onSelectChange = (e: SelectChangeEvent) =>
 	{
@@ -52,26 +59,61 @@ const DashboardPage = (props: DashboardPageProps) =>
 
 	const onConfirmFilter = () =>
 	{
-		console.log("Confirm");
+		props.server.GetAllRequestList({
+			PersonId: 37,
+			PageNumber: paginate,
+			PageSize: 10,
+			Mobile: textInput.mobile,
+			Serial: textInput.deviceSerial,
+			CustomerName: textInput.customerName,
+			state: selectInput.state,
+		})
+			.then((response) =>
+			{
+				console.log(response)
+			})
+			.catch((error) => console.log(error))
 	}
 
 	const onCancelFilter = () =>
 	{
 		console.log("cancel");
+		clearFilteredData();
 	}
 
 	useEffect(() =>
 	{
-		let X = false;
-		if (X)
-			props.server.GetAllRequestList({
-				PersonId: 37,
-				PageNumber: 1,
-				PageSize: 10
-			})
-				.then((res) => console.log(res))
-				.catch((error) => console.log(error));
-	})
+		if (props.isLogin)
+			props.server.postLogin({ UserName: USER_NAME, Password: PASSWORD, UserType: USER_TYPE })
+				.then(() =>
+				{
+					toast.success("خوش آمدید")
+					getAllRequestList();
+				})
+				.catch((error) =>
+				{
+					console.log(error);
+					toast.error("ورود با خطا مواجه شد")
+				});
+	}, [props.isLogin]);
+
+	const getAllRequestList = () =>
+	{
+		props.server.GetAllRequestList({
+			PersonId: 37,
+			PageNumber: 1,
+			PageSize: 10
+		})
+			.then((res) => console.log(res))
+			.catch((error) => console.log(error));
+	}
+
+	const clearFilteredData = () =>
+	{
+		setPaginate(0);
+		setSelectInput({ state: 0, text: "" });
+		setTextInput({ customerName: "", deviceSerial: "", mobile: "" })
+	}
 	return (
 		<>
 			<div style={{
@@ -138,9 +180,8 @@ const DashboardPage = (props: DashboardPageProps) =>
 			</Stack>
 			<Box sx={{ mt: 4 }} >
 				<FilteredTable
-					filteredTableData={[
-
-					]}
+					filteredTableData={[]}
+					paginate={paginate}
 				/>
 			</Box>
 		</>

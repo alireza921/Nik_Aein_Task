@@ -5,12 +5,13 @@ import { RequestModelsType } from '../types/RequestModelsType';
 interface FilteredTableProps
 {
 	filteredTableData: RequestModelsType[];
+	paginate: number;
 }
 
 const FilteredTable = (props: FilteredTableProps) =>
 {
 	const columns: GridColDef[] = [
-		{ field: 'name', headerName: 'نام درخواست/شماره ', width: 50 },
+		{ field: 'name', headerName: 'نام درخواست/شماره ', width: 150 },
 		{ field: 'device', headerName: 'دستگاه/ شماره سریال ', width: 250 },
 		{ field: 'state', headerName: 'وضعیت', width: 90 },
 		{ field: 'customerName', headerName: 'نام مشتری/آدرس', width: 130, },
@@ -39,7 +40,7 @@ const FilteredTable = (props: FilteredTableProps) =>
 		return rows;
 	}
 
-	const paginationModel = { page: 0, pageSize: 10 };
+	const paginationModel = { page: props.paginate ?? 0, pageSize: 10 };
 	const rows = rowProvider(props.filteredTableData);
 	return (
 		<>
