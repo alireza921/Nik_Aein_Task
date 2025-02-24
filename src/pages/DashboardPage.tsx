@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import SelectBox from "../components/SelectBox";
 import StringBox from "../components/StringBox";
 import FilteredTable from "../components/FilteredTable";
+import DateBox from "../components/DateBox";
 
 const USER_NAME = "09115787681";
 const PASSWORD = "906475";
@@ -163,6 +164,8 @@ const DashboardPage = (props: DashboardPageProps) =>
 						selectItems={selectData}
 						onSelectChange={onSelectChange}
 					/>
+					
+					<DateBox />
 
 					<StringBox
 						lable="شماره موبایل"

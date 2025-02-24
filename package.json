@@ -3,7 +3,6 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
-		"@date-io/dayjs": "^3.2.0",
 		"@emotion/react": "^11.14.0",
 		"@emotion/styled": "^11.14.0",
 		"@mui/icons-material": "^6.4.5",
@@ -12,16 +11,13 @@
 		"@mui/system": "^6.4.3",
 		"@mui/utils": "^6.4.3",
 		"@mui/x-data-grid": "^7.27.0",
-		"@mui/x-date-pickers": "^7.27.0",
 		"@types/js-cookie": "^3.0.6",
 		"axios": "^1.7.9",
-		"date-fns-jalali": "^4.0.0-0",
-		"dayjs": "^1.11.13",
-		"jalali-moment": "^3.3.11",
 		"js-cookie": "^3.0.5",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"react-hot-toast": "^2.4.1",
+		"react-multi-date-picker": "^4.5.2",
 		"react-scripts": "5.0.1"
 	},
 	"scripts": {
