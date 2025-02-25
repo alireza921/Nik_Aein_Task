@@ -4,7 +4,7 @@ import { RequestModelsType } from '../types/RequestModelsType';
 
 interface FilteredTableProps
 {
-	filteredTableData: RequestModelsType[];
+	filteredTableData?: RequestModelsType[];
 	paginate: number;
 }
 
@@ -21,9 +21,9 @@ const FilteredTable = (props: FilteredTableProps) =>
 		{ field: 'deliverDate', headerName: 'تاریخ بررسی', width: 130, },
 	];
 
-	const rowProvider = (datas: RequestModelsType[]) =>
+	const rowProvider = (datas?: RequestModelsType[]) =>
 	{
-		const rows = datas.map((data) =>
+		const rows = datas?.map((data) =>
 		{
 			return {
 				id: data.Id,

@@ -1,25 +1,13 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { SelectInputType } from "../types/SelectInputType";
-import { selectData } from "../data/SelectData";
 import { Box, Button, SelectChangeEvent, Stack, Typography } from "@mui/material";
 import { Server } from "../server/Server";
-import toast from "react-hot-toast";
-//Components 
-import SelectBox from "../components/SelectBox";
-import StringBox from "../components/StringBox";
 import FilteredTable from "../components/FilteredTable";
-import DateBox from "../components/DateBox";
+import { TextFiltersType } from "../types/TextFiltersType";
+import Filters from "../components/Filters";
+import { TableDataType } from "../types/TableDataType";
 
-const USER_NAME = "09115787681";
-const PASSWORD = "906475";
-const USER_TYPE = 1;
-
-interface DashboardPageState
-{
-	mobile: string;
-	deviceSerial: string;
-	customerName: string;
-}
+const PERSON_ID: number = 37;
 
 interface DashboardPageProps
 {
@@ -33,13 +21,31 @@ const DashboardPage = (props: DashboardPageProps) =>
 		text: "",
 		state: 0
 	});
-	const [textInput, setTextInput] = useState<DashboardPageState>({
+	const [textInput, setTextInput] = useState<TextFiltersType>({
 		mobile: "",
 		deviceSerial: "",
 		customerName: ""
 	});
 	const [paginate, setPaginate] = useState<number>(0);
-	// const [tableData, setTableData] = useState<TableDataType>();
+	const [tableData, setTableData] = useState<TableDataType>();
+
+	useEffect(() =>
+	{
+		props.server.GetAllRequestList({
+			PersonId: PERSON_ID,
+			PageNumber: 1,
+			PageSize: 10
+		})
+			.then((res) =>
+			{
+				//todo -> Back end fix Types
+				// if (response)
+				// 	if (response.data)
+				// 		setTableData(response?.data)
+				console.log(res);
+			})
+			.catch((error) => console.log(error));
+	}, [props.isLogin]);
 
 	const onSelectChange = (e: SelectChangeEvent) =>
 	{
@@ -55,12 +61,11 @@ const DashboardPage = (props: DashboardPageProps) =>
 		}));
 
 	}
-	// const onDateChange = () => { }
 
 	const onConfirmFilter = () =>
 	{
 		props.server.GetAllRequestList({
-			PersonId: 37,
+			PersonId: PERSON_ID,
 			PageNumber: paginate,
 			PageSize: 10,
 			Mobile: textInput.mobile,
@@ -70,6 +75,10 @@ const DashboardPage = (props: DashboardPageProps) =>
 		})
 			.then((response) =>
 			{
+				//todo -> Back end fix Types
+				// if (response)
+				// 	if (response.data)
+				// 		setTableData(response?.data)
 				console.log(response)
 			})
 			.catch((error) => console.log(error))
@@ -77,43 +86,11 @@ const DashboardPage = (props: DashboardPageProps) =>
 
 	const onCancelFilter = () =>
 	{
-		console.log("cancel");
-		clearFilteredData();
-	}
-
-	useEffect(() =>
-	{
-		if (props.isLogin)
-			props.server.postLogin({ UserName: USER_NAME, Password: PASSWORD, UserType: USER_TYPE })
-				.then(() =>
-				{
-					toast.success("خوش آمدید")
-					getAllRequestList();
-				})
-				.catch((error) =>
-				{
-					console.log(error);
-					toast.error("ورود با خطا مواجه شد")
-				});
-	}, [props.isLogin]);
-
-	const getAllRequestList = () =>
-	{
-		props.server.GetAllRequestList({
-			PersonId: 37,
-			PageNumber: 1,
-			PageSize: 10
-		})
-			.then((res) => console.log(res))
-			.catch((error) => console.log(error));
-	}
-
-	const clearFilteredData = () =>
-	{
 		setPaginate(0);
 		setSelectInput({ state: 0, text: "" });
-		setTextInput({ customerName: "", deviceSerial: "", mobile: "" })
+		setTextInput({ customerName: "", deviceSerial: "", mobile: "" });
 	}
+
 	return (
 		<>
 			<div style={{
@@ -140,40 +117,12 @@ const DashboardPage = (props: DashboardPageProps) =>
 				alignItems="center"
 				gap={1}
 			>
-				<Stack
-					direction="row"
-					flexWrap="wrap"
-					alignItems="center"
-					gap={1}
-				>
-
-					<StringBox
-						lable="سریال دستگاه"
-						name="deviceSerial"
-						value={textInput.deviceSerial}
-						onTextInputChange={onTextInputChange}
-					/>
-					<StringBox
-						lable="نام مشتری"
-						name="customerName"
-						value={textInput.customerName}
-						onTextInputChange={onTextInputChange}
-					/>
-					<SelectBox
-						text={selectInput.text}
-						selectItems={selectData}
-						onSelectChange={onSelectChange}
-					/>
-					
-					<DateBox />
-
-					<StringBox
-						lable="شماره موبایل"
-						name="mobile"
-						value={textInput.mobile}
-						onTextInputChange={onTextInputChange}
-					/>
-				</Stack>
+				<Filters
+					textInput={textInput}
+					selectInput={selectInput}
+					onTextInputChange={onTextInputChange}
+					onSelectChange={onSelectChange}
+				/>
 
 				<Stack gap={1} direction="row">
 					<Button variant="contained" onClick={onConfirmFilter} >تایید</Button>
@@ -182,7 +131,7 @@ const DashboardPage = (props: DashboardPageProps) =>
 			</Stack>
 			<Box sx={{ mt: 4 }} >
 				<FilteredTable
-					filteredTableData={[]}
+					filteredTableData={tableData?.RequestModels}
 					paginate={paginate}
 				/>
 			</Box>
