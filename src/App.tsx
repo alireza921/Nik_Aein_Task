@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Server } from "./server/Server";
 import toast from "react-hot-toast";
 import DashboardPage from "./pages/DashboardPage";
-import Cookies from "js-cookie";
 import { ThemeProvider } from "@mui/material/styles";
 import { Button, CssBaseline } from "@mui/material";
 import { theme } from "./theme/theme";
@@ -16,8 +15,6 @@ function App()
 {
 	var server = new Server();
 	const [isLogin, setIsLogin] = useState<boolean>(false);
-	const token = Cookies.get("X-Access-Token");
-	console.log(token);
 
 	const onLogin = () =>
 	{
