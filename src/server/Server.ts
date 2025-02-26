@@ -32,7 +32,6 @@ export class Server
 	async get(subdirectory: string, query: RequestType)
 	{
 		let fullURL = this.getLink(subdirectory, query);
-		debugger;
 		return await axios.get(fullURL, this.headers);
 	}
 

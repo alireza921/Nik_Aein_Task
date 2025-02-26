@@ -27,7 +27,7 @@ const DashboardPage = (props: DashboardPageProps) =>
 		customerName: ""
 	});
 	const [paginate, setPaginate] = useState<number>(0);
-	const [tableData, setTableData] = useState<TableDataType>();
+	const [tableData, setTableData] = useState<TableDataType | null>(); //todo: when back end fixed -> remove (| null)
 
 	useEffect(() =>
 	{
@@ -42,6 +42,7 @@ const DashboardPage = (props: DashboardPageProps) =>
 				// if (response)
 				// 	if (response.data)
 				// 		setTableData(response?.data)
+				setTableData(null); // after backend fixed -> remove this line
 				console.log(res);
 			})
 			.catch((error) => console.log(error));

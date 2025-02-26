@@ -10,7 +10,7 @@ interface DateBoxProps
 const DateBox = (props: DateBoxProps) =>
 {
 	console.log(props);
-	
+
 	return (
 		<>
 			<div style={{ direction: "rtl" }}>
@@ -18,6 +18,7 @@ const DateBox = (props: DateBoxProps) =>
 					calendar={persian}
 					locale={persian_fa}
 					calendarPosition="bottom-right"
+					inputClass="input_date"
 				/>
 			</div>
 		</>
